@@ -23,5 +23,5 @@ repos:
     rev: v1.9.0
     hooks:
       - id: mypy
-        additional_dependencies: ['fastapi==0.110.1']
+        additional_dependencies: ['fastapi==0.110.1', 'sqlalchemy==2.0.30', 'psycopg2==2.9.9']
         

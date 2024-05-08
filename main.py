@@ -1,22 +1,25 @@
 from fastapi import FastAPI, HTTPException
 
-from dependencies import SQLiteRepository, get_sqlite_control
+# from dependencies import SQLiteRepository, get_sqlite_control
+from dependencies import PostgreSQLRepository, get_postgreSQL_control
 from models import GeoJSONFeatureCollection, RouteModel
 
 # Create db if doesnt exist
-get_sqlite_control().insert_data("web_challenge.csv")
+# get_sqlite_control().insert_data("web_challenge.csv")
+get_postgreSQL_control().insert_data("web_challenge.csv")
+
 # Start App
 app = FastAPI()
 
 
 @app.get("/routes")
-async def get_all_routes(sqlite_control: SQLiteRepository) -> list[RouteModel]:
+async def get_all_routes(sqlite_control: PostgreSQLRepository) -> list[RouteModel]:
     return sqlite_control.get_all_routes()
 
 
 @app.get("/routes/{route_id}")
 async def get_route(
-    route_id: int, sqlite_control: SQLiteRepository
+    route_id: int, sqlite_control: PostgreSQLRepository
 ) -> GeoJSONFeatureCollection | None:
     geojson = sqlite_control.get_route(route_id)
     if geojson is None:
